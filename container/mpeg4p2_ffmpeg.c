@@ -4,6 +4,8 @@
 //
 
 // mpeg4_unpack_bframes
+#include <libavcodec/bsf.h>
+
 typedef struct
 {
     const AVBitStreamFilter *bsf;

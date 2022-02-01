@@ -234,14 +234,14 @@ static int32_t Write(WriterSubCallData_t *subPacket)
     AVSubtitle subtitle;
     memset(&subtitle, 0, sizeof(subtitle));
 
-    AVPacket pkt;
-    av_init_packet(&pkt);
-    pkt.data = subPacket->data;
-    pkt.size = subPacket->len;
-    pkt.pts  = subPacket->pts;
+    AVPacket* pkt;
+    pkt = av_packet_alloc();
+    pkt->data = subPacket->data;
+    pkt->size = subPacket->len;
+    pkt->pts  = subPacket->pts;
 
     int has_subtitle = 0;
-    int used = avcodec_decode_subtitle2(g_sys->p_context, &subtitle, &has_subtitle, &pkt);
+    int used = avcodec_decode_subtitle2(g_sys->p_context, &subtitle, &has_subtitle, pkt);
     uint32_t width = g_sys->p_context->width > 0 ? g_sys->p_context->width : subPacket->width;
     uint32_t height = g_sys->p_context->height > 0 ? g_sys->p_context->height : subPacket->height;
     if (has_subtitle && width > 0 && height > 0)
