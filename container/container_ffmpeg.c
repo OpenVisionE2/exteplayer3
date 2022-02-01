@@ -1853,7 +1853,8 @@ int32_t container_ffmpeg_init_av_context(Context_t *context, char *filename, uin
         }
     }
 
-    avContextTab[AVIdx]->iformat->flags |= AVFMT_SEEK_TO_PTS;
+    //ffmpeg5: error: assignment of member 'flags' in read-only object -> so commented out next line
+	//avContextTab[AVIdx]->iformat->flags |= AVFMT_SEEK_TO_PTS;
     avContextTab[AVIdx]->flags = AVFMT_FLAG_GENPTS;
 
     if (context->playback->noprobe)
@@ -2268,7 +2269,7 @@ int32_t container_ffmpeg_update_tracks(Context_t *context, char *filename, int32
                         {
                             ffmpeg_printf(10, " Handle inject_as_pcm = %d\n", track.inject_as_pcm);
 
-                            AVCodec *codec = avcodec_find_decoder(get_codecpar(stream)->codec_id);
+                            const AVCodec *codec = avcodec_find_decoder(get_codecpar(stream)->codec_id);
 
                             int errorCode = avcodec_open2(track.avCodecCtx, codec, NULL);
                             if(codec != NULL && !errorCode)
