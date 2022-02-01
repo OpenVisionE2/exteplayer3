@@ -235,7 +235,7 @@ static int32_t Write(WriterSubCallData_t *subPacket)
     memset(&subtitle, 0, sizeof(subtitle));
 
     AVPacket* pkt;
-	pkt = av_packet_alloc();
+    pkt = av_packet_alloc();
     pkt->data = subPacket->data;
     pkt->size = subPacket->len;
     pkt->pts  = subPacket->pts;
